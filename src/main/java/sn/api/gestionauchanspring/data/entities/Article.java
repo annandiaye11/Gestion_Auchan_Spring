@@ -11,4 +11,20 @@ public class Article extends AbstractType {
         this.qteStock = qteStock;
         this.prix = prix;
     }
+
+    public int getPrix() {
+        return prix;
+    }
+
+    public void setPrix(int prix) {
+        this.prix = prix;
+    }
+
+    public int getQteStock() {
+        return qteStock;
+    }
+
+    public void setQteStock(int qteStock) {
+        this.qteStock = qteStock;
+    }
 }
