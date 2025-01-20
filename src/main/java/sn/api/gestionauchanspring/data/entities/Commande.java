@@ -1,7 +1,7 @@
 package sn.api.gestionauchanspring.data.entities;
 
 import jakarta.persistence.*;
-import sn.api.gestionauchanspring.data.enumerations.EtatCommande;
+import sn.api.gestionauchanspring.data.enums.EtatCommande;
 
 import java.time.LocalDate;
 

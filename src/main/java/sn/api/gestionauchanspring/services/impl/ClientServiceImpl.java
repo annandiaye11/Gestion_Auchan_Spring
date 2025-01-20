@@ -1,5 +1,7 @@
 package sn.api.gestionauchanspring.services.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import sn.api.gestionauchanspring.data.entities.Client;
 import sn.api.gestionauchanspring.data.repositories.ClientRepository;
@@ -55,4 +57,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
 
+    @Override
+    public Page<Client> findAll(Pageable pageable) {
+        return clientRepository.findAll(pageable);
+    }
 }

@@ -1,4 +1,4 @@
-package sn.api.gestionauchanspring.data.enumerations;
+package sn.api.gestionauchanspring.data.enums;
 
 public enum EtatCommande {
     EnCours,
