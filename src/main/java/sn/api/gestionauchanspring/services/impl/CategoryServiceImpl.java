@@ -3,6 +3,7 @@ package sn.api.gestionauchanspring.services.impl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import sn.api.gestionauchanspring.data.entities.Article;
 import sn.api.gestionauchanspring.data.entities.Category;
 import sn.api.gestionauchanspring.data.repositories.CategoryRepository;
 import sn.api.gestionauchanspring.services.CategoryService;
@@ -44,6 +45,8 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getById(Long id) {
+        Category category = categoryRepository.findById(id).orElse(null);
+        System.out.println(category !=null);
         return categoryRepository.findById(id).orElse(null);
     }
 

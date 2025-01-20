@@ -5,10 +5,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import sn.api.gestionauchanspring.data.entities.Category;
 import sn.api.gestionauchanspring.services.CategoryService;
 import sn.api.gestionauchanspring.web.controllers.CategoryController;
 
+@RestController
+@RequestMapping("api/v1/categories")
 public class CategoryControllerImpl implements CategoryController {
     private final CategoryService categoryService;
 

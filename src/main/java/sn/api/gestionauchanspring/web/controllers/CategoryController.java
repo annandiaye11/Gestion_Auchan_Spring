@@ -7,10 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sn.api.gestionauchanspring.data.entities.Category;
 
+@RestController
 @RequestMapping("api/v1/categories")
 public interface CategoryController {
 
-    @GetMapping("/")
+    @GetMapping("")
     ResponseEntity<Page<Category>> getAllCategories( @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size);
 
     @GetMapping("/{id}")

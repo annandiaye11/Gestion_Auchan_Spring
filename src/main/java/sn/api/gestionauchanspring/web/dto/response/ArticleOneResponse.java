@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import sn.api.gestionauchanspring.data.entities.Article;
 import sn.api.gestionauchanspring.data.entities.Category;
 
+
 @NoArgsConstructor
 
 public class ArticleOneResponse {
@@ -25,40 +26,20 @@ public class ArticleOneResponse {
     }
 
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCode() {
-        return code;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
-    public int getPrix() {
-        return prix;
-    }
-
     public void setPrix(int prix) {
         this.prix = prix;
-    }
-
-    public int getQteStock() {
-        return qteStock;
     }
 
     public void setQteStock(int qteStock) {
