@@ -36,8 +36,8 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client update(Client client) {
-        Client oldClient = clientRepository.findById(client.getId()).orElse(null);
+    public Client update(Long id, Client client) {
+        Client oldClient = clientRepository.findById(id).orElse(null);
         if (oldClient != null) {
             oldClient.setName(client.getName());
             oldClient.setTelephone(client.getTelephone());

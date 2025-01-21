@@ -8,7 +8,7 @@ import sn.api.gestionauchanspring.data.entities.Category;
 
 import java.util.List;
 
-@Service
+
 public interface CategoryService {
     Category create(Category categoryRequest);
     Category update(Long id, Category categoryRequest);

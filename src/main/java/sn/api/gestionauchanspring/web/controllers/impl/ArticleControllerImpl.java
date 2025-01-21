@@ -7,12 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import sn.api.gestionauchanspring.data.entities.Article;
 import sn.api.gestionauchanspring.data.repositories.ArticleRepository;
 import sn.api.gestionauchanspring.services.ArticleService;
 import sn.api.gestionauchanspring.web.controllers.ArticleController;
 import sn.api.gestionauchanspring.web.dto.response.ArticleOneResponse;
 
+@RestController
 public class ArticleControllerImpl  implements ArticleController {
     private final ArticleService articleService;
 

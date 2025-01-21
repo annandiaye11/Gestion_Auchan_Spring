@@ -1,11 +1,14 @@
 package sn.api.gestionauchanspring.services.impl;
 
+import jakarta.persistence.Entity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import sn.api.gestionauchanspring.data.entities.Article;
 import sn.api.gestionauchanspring.data.repositories.ArticleRepository;
 import sn.api.gestionauchanspring.services.ArticleService;
 
+@Service
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
 

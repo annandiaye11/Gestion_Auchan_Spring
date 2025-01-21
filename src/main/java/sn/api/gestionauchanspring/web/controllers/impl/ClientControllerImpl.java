@@ -5,10 +5,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RestController;
 import sn.api.gestionauchanspring.data.entities.Client;
 import sn.api.gestionauchanspring.services.ClientService;
 import sn.api.gestionauchanspring.web.controllers.ClientController;
 
+@RestController
 public class ClientControllerImpl implements ClientController {
     private final ClientService clientService;
 
@@ -35,6 +37,6 @@ public class ClientControllerImpl implements ClientController {
 
     @Override
     public ResponseEntity<Client> updateClient(Long id, Client client) {
-       return  new ResponseEntity<>(clientService.update(client), HttpStatus.OK);
+       return  new ResponseEntity<>(clientService.update(id, client), HttpStatus.OK);
     }
 }

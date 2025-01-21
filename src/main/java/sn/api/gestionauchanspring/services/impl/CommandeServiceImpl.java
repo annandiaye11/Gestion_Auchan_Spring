@@ -32,8 +32,8 @@ public class CommandeServiceImpl implements CommandeService {
     }
 
     @Override
-    public Commande update(Commande data) {
-        Commande oldCommande = commandeRepository.findById(data.getId()).orElse(null);
+    public Commande update(Long id, Commande data) {
+        Commande oldCommande = commandeRepository.findById(id).orElse(null);
         if (oldCommande != null) {
             oldCommande.setMontant(data.getMontant());
             oldCommande.setEtat(data.getEtat());

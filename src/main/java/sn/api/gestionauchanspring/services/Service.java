@@ -8,6 +8,6 @@ public interface Service<T> {
     List<T> getAll();
     T getById(Long id);
     T create(T data);
-    T update(T data);
+    T update(Long id, T data);
     boolean delete(Long id);
 }

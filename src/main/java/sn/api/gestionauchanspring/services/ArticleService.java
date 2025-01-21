@@ -6,7 +6,7 @@ import sn.api.gestionauchanspring.data.entities.Article;
 import org.springframework.data.domain.Pageable;
 
 
-@Service
+
 public interface ArticleService {
     Page<Article> getAll(Pageable pageable);
     Article getById(Long id);
