@@ -13,6 +13,7 @@ import sn.api.gestionauchanspring.data.repositories.ArticleRepository;
 import sn.api.gestionauchanspring.services.ArticleService;
 import sn.api.gestionauchanspring.web.controllers.ArticleController;
 import sn.api.gestionauchanspring.web.dto.response.ArticleOneResponse;
+import sn.api.gestionauchanspring.web.dto.response.Response;
 
 @RestController
 public class ArticleControllerImpl  implements ArticleController {
@@ -24,17 +25,18 @@ public class ArticleControllerImpl  implements ArticleController {
 
 
     @Override
-    public ResponseEntity<Page<ArticleOneResponse>> getAllArticles(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
-            Pageable pageable = PageRequest.of(page, size);
-            Page<Article> articles = articleService.getAll(pageable);
-            Page<ArticleOneResponse> response = articles.map(ArticleOneResponse::new);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+    public ResponseEntity<Response> getAllArticles(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Article> articles = articleService.getAll(pageable);
+        Page<ArticleOneResponse> response = articles.map(ArticleOneResponse::new);
+        return new ResponseEntity<>(new Response("200", "Articles", response), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ArticleOneResponse> getOne(Long id) {
+    public ResponseEntity<Response> getOne(Long id) {
         Article article = articleService.getById(id);
-        return new ResponseEntity<>(new ArticleOneResponse(article), HttpStatus.OK);
+        return new ResponseEntity<>(new Response("200", "Article", new ArticleOneResponse(article)), HttpStatus.OK);
     }
 
     @Override

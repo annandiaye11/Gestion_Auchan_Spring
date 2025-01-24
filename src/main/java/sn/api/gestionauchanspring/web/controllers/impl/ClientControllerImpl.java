@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import sn.api.gestionauchanspring.data.entities.Client;
 import sn.api.gestionauchanspring.services.ClientService;
 import sn.api.gestionauchanspring.web.controllers.ClientController;
+import sn.api.gestionauchanspring.web.dto.response.Response;
 
 @RestController
 public class ClientControllerImpl implements ClientController {
@@ -19,15 +20,19 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
-    public ResponseEntity<Page<Client>> getClients(int page, int size) {
+    public ResponseEntity<Response> getClients(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Client> clients= clientService.findAll(pageable);
-        return new ResponseEntity<>(clients, HttpStatus.OK);
+        return new ResponseEntity<>(new Response("200", "CLients", clients), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Client> getClientById(Long id) {
-      return  new ResponseEntity<>(clientService.getById(id), HttpStatus.OK);
+    public ResponseEntity<Response> getClientById(Long id) {
+        Client client = clientService.getById(id);
+        if(client == null) {
+            return new ResponseEntity<>(new Response("404", "Client not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+        }
+      return  new ResponseEntity<>(new Response("200", "CLient", client), HttpStatus.OK);
     }
 
     @Override

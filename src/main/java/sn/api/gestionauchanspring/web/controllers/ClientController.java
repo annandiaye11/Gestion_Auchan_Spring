@@ -5,15 +5,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sn.api.gestionauchanspring.data.entities.Client;
+import sn.api.gestionauchanspring.web.dto.response.Response;
 
 @RequestMapping("api/v1/clients")
 public interface ClientController {
 
     @GetMapping("/")
-    ResponseEntity<Page<Client>> getClients( @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size);
+    ResponseEntity<Response> getClients(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size);
 
     @GetMapping("/{id}")
-    ResponseEntity<Client> getClientById(@PathVariable Long id);
+    ResponseEntity<Response> getClientById(@PathVariable Long id);
 
     @PostMapping("/create")
     ResponseEntity<Client> createClient(@RequestBody Client client);

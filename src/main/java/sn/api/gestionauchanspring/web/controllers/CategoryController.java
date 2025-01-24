@@ -6,16 +6,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sn.api.gestionauchanspring.data.entities.Category;
+import sn.api.gestionauchanspring.web.dto.response.Response;
 
 @RestController
 @RequestMapping("api/v1/categories")
 public interface CategoryController {
 
     @GetMapping("")
-    ResponseEntity<Page<Category>> getAllCategories( @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size);
+    ResponseEntity<Response> getAllCategories(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size);
 
     @GetMapping("/{id}")
-    ResponseEntity<Category> getOne(@PathVariable Long id);
+    ResponseEntity<Response> getOne(@PathVariable Long id);
 
     @PostMapping("/create")
     ResponseEntity<Category> createCategory(@RequestBody Category category);
