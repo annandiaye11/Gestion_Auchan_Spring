@@ -9,7 +9,13 @@ import org.springframework.web.bind.annotation.RestController;
 import sn.api.gestionauchanspring.data.entities.Client;
 import sn.api.gestionauchanspring.services.ClientService;
 import sn.api.gestionauchanspring.web.controllers.ClientController;
+import sn.api.gestionauchanspring.web.dto.request.ClientSimpleCreateRequest;
+import sn.api.gestionauchanspring.web.dto.response.ClientSimpleResponse;
+import sn.api.gestionauchanspring.web.dto.response.ClientWithCommandResponse;
 import sn.api.gestionauchanspring.web.dto.response.Response;
+import sn.api.gestionauchanspring.web.dto.response.RestResponse;
+
+import java.util.Map;
 
 @RestController
 public class ClientControllerImpl implements ClientController {
@@ -20,28 +26,61 @@ public class ClientControllerImpl implements ClientController {
     }
 
     @Override
-    public ResponseEntity<Response> getClients(int page, int size) {
+    public ResponseEntity<Map<String, Object>> getClients(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Client> clients= clientService.findAll(pageable);
-        return new ResponseEntity<>(new Response("200", "CLients", clients), HttpStatus.OK);
+        Page<ClientSimpleResponse> clientsResponseDTO = clients.map(ClientSimpleResponse::new);
+        if (clients.hasContent()) {
+            return new ResponseEntity<>(
+                    RestResponse.responsePaginate(
+                            HttpStatus.OK,
+                            clientsResponseDTO.getContent(),
+                            new int[clientsResponseDTO.getTotalPages()] ,
+                            clientsResponseDTO.getNumber(),
+                            clientsResponseDTO.getTotalPages(),
+                            clientsResponseDTO.getTotalElements(),
+                            clientsResponseDTO.isFirst(),
+                            clientsResponseDTO.isLast(),
+                            "ClientSimpleResponse"
+                    ),
+                    HttpStatus.OK
+            );
+        }
+        return new ResponseEntity<>( RestResponse.response(HttpStatus.NO_CONTENT, null, "no content") , HttpStatus.NO_CONTENT);
     }
 
     @Override
-    public ResponseEntity<Response> getClientById(Long id) {
+    public ResponseEntity<Map<String, Object>> getClientById(Long id) {
         Client client = clientService.getById(id);
         if(client == null) {
-            return new ResponseEntity<>(new Response("404", "Client not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(RestResponse.response(HttpStatus.NOT_FOUND, "Client not found", "error"), HttpStatus.NOT_FOUND);
         }
-      return  new ResponseEntity<>(new Response("200", "CLient", client), HttpStatus.OK);
+        ClientSimpleResponse clientSimpleResponse = new ClientSimpleResponse(client);
+
+      return  new ResponseEntity<>(RestResponse.response(HttpStatus.OK, clientSimpleResponse, "ClientSimpleResponse"), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Client> createClient(Client client) {
-        return new ResponseEntity<>(clientService.create(client), HttpStatus.CREATED);
+    public ResponseEntity<Map<String, Object>> createClient(ClientSimpleCreateRequest client) {
+        Client clientResponse = clientService.create(client.toEntity());
+        ClientSimpleResponse clientSimpleResponse = new ClientSimpleResponse(clientResponse);
+        return new ResponseEntity<>(RestResponse.response(HttpStatus.CREATED, clientSimpleResponse, "ClientSimpleResponse"), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Client> updateClient(Long id, Client client) {
-       return  new ResponseEntity<>(clientService.update(id, client), HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> updateClient(Long id, Client client) {
+        Client clientResponse = clientService.update(id, client);
+        ClientSimpleResponse clientSimpleResponse = new ClientSimpleResponse(client);
+        return  new ResponseEntity<>(RestResponse.response(HttpStatus.OK, clientSimpleResponse, "ClientSimpleResponse"), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Map<String, Object>> getClientWithCommandes(Long id) {
+        Client client = clientService.getById(id);
+        if(client == null) {
+            return new ResponseEntity<>( RestResponse.response(HttpStatus.NO_CONTENT, null, "no content") , HttpStatus.NO_CONTENT);
+        }
+        ClientWithCommandResponse clientWithCommandResponse = new ClientWithCommandResponse(client);
+        return new ResponseEntity<>(RestResponse.response(HttpStatus.OK, clientWithCommandResponse, "ClientWithCommandResponse"), HttpStatus.OK);
     }
 }

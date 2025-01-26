@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 import sn.api.gestionauchanspring.data.entities.Category;
 import sn.api.gestionauchanspring.services.CategoryService;
 import sn.api.gestionauchanspring.web.controllers.CategoryController;
+import sn.api.gestionauchanspring.web.dto.response.CategoryAllResponse;
 import sn.api.gestionauchanspring.web.dto.response.Response;
+import sn.api.gestionauchanspring.web.dto.response.RestResponse;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/categories")
@@ -22,28 +26,45 @@ public class CategoryControllerImpl implements CategoryController {
     }
 
     @Override
-    public ResponseEntity<Response> getAllCategories(int page, int size) {
+    public ResponseEntity<Map<String, Object>> getAllCategories(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Category> categories = categoryService.getAllCategories(pageable);
-        return new ResponseEntity<>(new Response("200", "Categories", categories), HttpStatus.OK);
+        Page<CategoryAllResponse> categoryAllResponses = categories.map(CategoryAllResponse::new);
+        if (categories.hasContent()) {
+            return new ResponseEntity<>(RestResponse.responsePaginate(
+                    HttpStatus.OK,
+                    categoryAllResponses.getContent(),
+                    new int[categoryAllResponses.getTotalPages()],
+                    categoryAllResponses.getNumber(),
+                    categoryAllResponses.getTotalPages(),
+                    categoryAllResponses.getTotalElements(),
+                    categoryAllResponses.isFirst(),
+                    categoryAllResponses.isLast(),
+                    "CategoryAllResponse"
+            ), HttpStatus.OK);
+        }
+        return new ResponseEntity<>( RestResponse.response(HttpStatus.NO_CONTENT, null, "no content") , HttpStatus.NO_CONTENT);
     }
 
     @Override
-    public ResponseEntity<Response> getOne(Long id) {
+    public ResponseEntity<Map<String, Object>> getOne(Long id) {
         Category category = categoryService.getById(id);
         if(category == null) {
-            return new ResponseEntity<>(new Response("404", "Category not found", HttpStatus.NOT_FOUND), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>( RestResponse.response(HttpStatus.NO_CONTENT, null, "no content") , HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(new Response("200", "Category", categoryService.getById(id)), HttpStatus.OK);
+        CategoryAllResponse categoryAllResponse = new CategoryAllResponse(category);
+        return new ResponseEntity<>(RestResponse.response(HttpStatus.OK, categoryAllResponse, "CategoryAllResponse"), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Category> createCategory(Category category) {
-       return new ResponseEntity<>(categoryService.create(category), HttpStatus.CREATED);
+    public ResponseEntity<Map<String, Object>> createCategory(Category category) {
+        CategoryAllResponse categoryAllResponse = new CategoryAllResponse(categoryService.create(category));
+           return new ResponseEntity<>( RestResponse.response(HttpStatus.CREATED, categoryAllResponse, "CategoryAllResponse") , HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<Category> updateCategory(Long id, Category category) {
-        return  new ResponseEntity<>(categoryService.update(id, category), HttpStatus.OK);
+    public ResponseEntity<Map<String, Object>> updateCategory(Long id, Category category) {
+        CategoryAllResponse categoryAllResponse = new CategoryAllResponse(categoryService.update(id, category));
+        return  new ResponseEntity<>(RestResponse.response(HttpStatus.OK, categoryAllResponse, "CategoryAllResponse"), HttpStatus.OK);
     }
 }

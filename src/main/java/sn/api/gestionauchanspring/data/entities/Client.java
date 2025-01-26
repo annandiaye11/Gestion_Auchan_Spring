@@ -29,6 +29,14 @@ public class Client {
     public Client() {
     }
 
+    public Set<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(Set<Commande> commandes) {
+        this.commandes = commandes;
+    }
+
     public String getTelephone() {
         return telephone;
     }

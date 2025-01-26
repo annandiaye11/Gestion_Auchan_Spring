@@ -18,7 +18,7 @@ public class Commande {
     @Enumerated(EnumType.STRING)
     private EtatCommande etat;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "client_id")
     private Client client;
 

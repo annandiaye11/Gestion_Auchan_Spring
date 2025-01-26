@@ -5,11 +5,7 @@ import lombok.NoArgsConstructor;
 import sn.api.gestionauchanspring.data.entities.Article;
 import sn.api.gestionauchanspring.data.entities.Category;
 
-
-@NoArgsConstructor
-
 public class ArticleOneResponse {
-
 
     private Long id;
     private String code;
@@ -25,6 +21,8 @@ public class ArticleOneResponse {
         this.qteStock = article.getQteStock();
     }
 
+    public ArticleOneResponse() {
+    }
 
     public void setId(Long id) {
         this.id = id;

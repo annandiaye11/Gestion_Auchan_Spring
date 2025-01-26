@@ -5,7 +5,6 @@ public class Response {
     private String type;
     private Object data;
 
-
     public Response(String status, String type, Object data) {
         this.status = status;
         this.type = type;

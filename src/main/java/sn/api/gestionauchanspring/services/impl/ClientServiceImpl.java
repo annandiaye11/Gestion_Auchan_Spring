@@ -3,6 +3,7 @@ package sn.api.gestionauchanspring.services.impl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sn.api.gestionauchanspring.data.entities.Client;
 import sn.api.gestionauchanspring.data.repositories.ClientRepository;
 import sn.api.gestionauchanspring.services.ClientService;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class ClientServiceImpl implements ClientService {
     private final ClientRepository clientRepository;
 
