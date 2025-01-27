@@ -46,7 +46,7 @@ public class ClientControllerImpl implements ClientController {
                     HttpStatus.OK
             );
         }
-        return new ResponseEntity<>( RestResponse.response(HttpStatus.NO_CONTENT, null, "no content") , HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>( RestResponse.response(HttpStatus.NO_CONTENT, null, "no content") , HttpStatus.OK);
     }
 
     @Override

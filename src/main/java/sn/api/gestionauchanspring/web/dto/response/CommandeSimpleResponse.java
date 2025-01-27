@@ -19,4 +19,36 @@ public class CommandeSimpleResponse {
         this.montant = commande.getMontant();
         this.etat = commande.getEtat();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public int getMontant() {
+        return montant;
+    }
+
+    public void setMontant(int montant) {
+        this.montant = montant;
+    }
+
+    public EtatCommande getEtat() {
+        return etat;
+    }
+
+    public void setEtat(EtatCommande etat) {
+        this.etat = etat;
+    }
 }

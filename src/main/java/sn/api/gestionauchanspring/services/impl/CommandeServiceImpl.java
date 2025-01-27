@@ -1,5 +1,7 @@
 package sn.api.gestionauchanspring.services.impl;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import sn.api.gestionauchanspring.data.entities.Commande;
 import sn.api.gestionauchanspring.data.repositories.CommandeRepository;
@@ -15,9 +17,10 @@ public class CommandeServiceImpl implements CommandeService {
         this.commandeRepository = commandeRepository;
     }
 
+
     @Override
     public List<Commande> getAll() {
-        return commandeRepository.findAll();
+        return List.of();
     }
 
     @Override
@@ -51,5 +54,10 @@ public class CommandeServiceImpl implements CommandeService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public Page<Commande> GetAllCommandes(Pageable pageable) {
+        return commandeRepository.findAll(pageable);
     }
 }

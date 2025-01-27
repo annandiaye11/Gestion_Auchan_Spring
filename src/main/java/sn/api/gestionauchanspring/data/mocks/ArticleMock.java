@@ -30,8 +30,9 @@ public class ArticleMock implements CommandLineRunner {
         for (int i = 0; i < 10; i++) {
             Article article = new Article();
             article.setName("Article " + i);
-            article.setQteStock(random.nextInt(100));
-            article.setCategory(categories.get(random.nextInt(categories.size())));
+            article.setCode("Code "+i);
+            article.setQteStock(100);
+            article.setCategory(categoryService.getById(1L));
             articleService.create(article);
         }
     }
